@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Send Mail</h2>
+<form action="/Mail/SendMail" method="post">
+    <div class="form-group">
+        <label for="formmail">From</label><br />
+
+    </div>
+    <input type="text" id="formmail" name="From" value="" placeholder="Nhập địa chỉ email của bạn..." />
+    <div class="form-group">
+        <label for="tomail">To</label><br />
+    </div>
+    <input id="tomail" name="To" value="" type="text" placeholder="Nhập địa chỉ email người nhận..." />
+    <div class="form-group">
+        <label for="subject">Subject</label><br />
+    </div>
+    <input id="subject" type="text" name="Subject" value="" placeholder="Nhập chủ đề..." />
+    <div class="form-group">
+        <label for="body">Body</label><br />
+    </div>
+    <input type="text" id="body" name="Body" value="" placeholder="Nội dung tin nhắn..." />
+    <div class="form-group">
+        <input value="Send Email" type="submit" />
+    </div>
+</form>
+

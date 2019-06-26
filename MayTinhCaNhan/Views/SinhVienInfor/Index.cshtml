@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Đọc ghi file</h1>
+<form action="/SinhVienInfor/Save" method="post">
+    <label>Mã sinh viên</label><br />
+    <input name="Id" value=@ViewBag.id placeholder="Nhập mã sinh viên" /> <br />
+    <label>Họ và tên</label><br />
+    <input name="Name" value=@ViewBag.name type="text" placeholder="Họ tên" /><br />
+    <label>Điểm trung bình</label><br />
+    <input value=@ViewBag.mark name="Mark" type="text" placeholder="Điểm trung bình" /><br />
+    <input type="submit" value="Lưu" />
+</form>
+<a href="/SinhVienInfor/Open">Mowr</a>
+
+@ViewBag.id

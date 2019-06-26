@@ -59,7 +59,7 @@
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
     <Compile Include="EF\Menu.cs" />
-    <Compile Include="EF\OnlineShopDbContext.cs" />
+    <Compile Include="EF\onlineShopDbContext.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductCategory.cs" />
     <Compile Include="EF\Slide.cs" />

@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Upload</title>
+</head>
+<body>
+    <div>
+        <h1>Upload File</h1>
+        <form method="Post" enctype="multipart/form-data" action="/UploadFile/Upload">
+            <div>Hình ảnh: <input name="image" type="file" /> </div>
+            <div>Tài liệu: <input name="document" type="file" /> </div>
+            <hr />
+            <input type="submit" value="Upload" />
+        </form>
+        @ViewBag.FileName
+        @ViewBag.FileType
+        @ViewBag.FileSize
+    </div>
+</body>
+</html>
+
