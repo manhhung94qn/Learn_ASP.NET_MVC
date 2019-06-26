@@ -168,10 +168,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CheckListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReadAndWirteController.cs" />
+    <Compile Include="Controllers\ShowInforStudentController.cs" />
     <Compile Include="Controllers\SinhVienInforController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,6 +181,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MailInfo.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Save.cs" />
@@ -249,6 +252,8 @@
     <Content Include="Views\SinhVienInfor\Open.cshtml" />
     <Content Include="Views\Mail\Index.cshtml" />
     <Content Include="Views\Mail\SendMail.cshtml" />
+    <Content Include="Views\ShowInforStudent\Index.cshtml" />
+    <Content Include="Views\CheckList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

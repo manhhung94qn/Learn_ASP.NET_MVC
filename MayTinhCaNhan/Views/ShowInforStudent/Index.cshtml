@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+@model List<MayTinhCaNhan.Models.SinhVienInfor>
+
+<h2>Thoong tin sinh vien</h2>
+@foreach (var item in Model)
+{
+    <li>Ma sinh vien: @item.Id</li>
+    <li>Ten sinh vien: @item.Name</li>
+    @: Pali text is @item.Marks
+}
