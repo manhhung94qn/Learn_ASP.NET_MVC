@@ -32,8 +32,8 @@ namespace MayTinhCaNhan.Controllers
                 mess.To.Add(new MailAddress(mailContent.To));
                 mess.From = new MailAddress(mailContent.From);
                 mess.ReplyToList.Add(mailContent.From);
-                mess.Subject = mess.Subject;
-                mess.Body = mess.Body;
+                mess.Subject = mailContent.Subject;
+                mess.Body = mailContent.Body;
                 mail.Send(mess);
             }
                 return View("SendMail");

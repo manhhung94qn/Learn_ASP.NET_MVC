@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_TestLayout</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    Noi dung cua body
+    <div>
+        @RenderBody();
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", false);
+</body>
+</html>

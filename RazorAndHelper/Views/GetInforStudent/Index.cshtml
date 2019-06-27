@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var textthu = "MVC là một mẫu kiến trúc phần mềm để tạo lập giao diện người dùng trên máy tính. MVC chia một ứng dụng thành ba phần tương tác được với nhau để tách biệt giữa cách thức mà thông tin được xử lý nội hàm và phần thông tin được trình bày và tiếp nhận từ phía người dùng.";
+}
+@helper Thugon(string noidung, int length)
+{
+    if (noidung.Length < length)
+    {
+        @noidung
+    }
+    else
+    {
+        @noidung.Substring(0, length);
+    }
+}
+
+
+@model RazorAndHelper.Models.Student
+<h2>Dang ki thanh vien</h2>
+@using (Html.BeginForm("Kiemtra", "GetInforStudentS"))
+@Html.ValidationSummary(true)
+<table>
+    <tr>
+        <td>@Html.LabelFor(st => st.ID)</td>
+        <td>@Html.TextBoxFor(st => st.ID) </td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(st => st.Password)</td>
+        <td>@Html.PasswordFor(st => st.Password)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(st => st.Fullname)</td>
+        <td>@Html.TextBoxFor(m => m.Fullname)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(st => st.Gender)</td>
+        <td>
+            <label>@Html.RadioButtonFor(st => st.Gender, true) Nam</label>
+            <label>@Html.RadioButtonFor(st => st.Gender, false) Nữ</label>
+        </td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(st => st.Birthday)</td>
+        <td>@Html.TextBoxFor(st => st.Birthday)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(st => st.Notes)</td>
+        <td>@Html.TextAreaFor(st => st.Notes)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Đăng k" /></td>
+    </tr>
+</table>
+
+}
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel();
+    <input type="submit" value="Đăng kí" />
+}
+@using (Html.BeginForm())
+{
+    @Html.TextBox("Tên đăng nhâp", "", new { @class = "usserName", @id = "usernick", disabled = "disabled" });
+
+    @Thugon(textthu, 10);
+}
+
