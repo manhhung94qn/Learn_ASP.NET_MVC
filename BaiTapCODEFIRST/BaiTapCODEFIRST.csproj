@@ -51,8 +51,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
@@ -134,6 +140,7 @@
     <Compile Include="DAL.cs" />
     <Compile Include="DAL\DataContext.cs" />
     <Compile Include="DAL\DbInitializer.cs" />
+    <Compile Include="FluentValidator\OrderItemValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -155,7 +162,9 @@
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="repository\IOrder.cs" />
+    <Compile Include="repository\IOrderItem.cs" />
+    <Compile Include="repository\OrderItemRepository.cs" />
+    <Compile Include="ViewModels\OrderItemVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -201,6 +210,8 @@
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\OrderItems\Index.cshtml" />
     <Content Include="Views\OrderItems\Create.cshtml" />
+    <Content Include="Views\OrderItems\Details.cshtml" />
+    <Content Include="Views\OrderItems\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,7 +21,7 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "inputNameProduct" } })
 
-            <span class="alert-NameProduct mb-0 pb-0" style="display: inline-block;">
+            <span class="alert-NameProduct mb-0 pb-0" >
                 Tên sản phẩm không được để trống.
             </span>
         </div>
@@ -31,12 +31,17 @@
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", id = "inputPriceProduct" } })
+
+                <span class="alert-PriceProduct mb-0 pb-0">
+                    Vui lòng nhập giá sản phẩm là số.
+                </span>
+
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default btn-createProduct" />
             </div>
         </div>
     </div>

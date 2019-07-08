@@ -7,13 +7,23 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BaiTapCODEFIRST.DAL;
+using BaiTapCODEFIRST.FluentValidator;
 using BaiTapCODEFIRST.Models;
+using BaiTapCODEFIRST.repository;
+using BaiTapCODEFIRST.ViewModels;
+using FluentValidation.Results;
 
 namespace BaiTapCODEFIRST.Controllers
 {
     public class OrderItemsController : Controller
     {
         private DataContext db = new DataContext();
+
+        private IOrderItem odit;
+        public OrderItemsController()
+        {
+            this.odit = new OrderItemRepository();
+        }
 
         // GET: OrderItems
         public ActionResult Index()
@@ -24,17 +34,42 @@ namespace BaiTapCODEFIRST.Controllers
         // GET: OrderItems/Details/5
         public ActionResult Details(int? id)
         {
+            List< OrderItemVM> orderItemDetailList = new List<OrderItemVM>();
+            var orderItemDetail = (from item in db.OrderItems
+                              join product in db.Products
+                              on item.Product_ID equals product.ID
+                              join order in db.Orders
+                              on item.Oder_ID equals order.ID
+                              where item.ID == id
+                              select new {
+                                        product.Name, 
+                                        product.Price, 
+                                        item.Quantity, 
+                                        order.CustomerName, 
+                                        order.CustomerPhone, 
+                                        order.CustomerEmail
+                                }).ToList();
+            foreach (var item in orderItemDetail)
+            {
+                OrderItemVM obj = new OrderItemVM();
+                obj.Name = item.Name;
+                obj.Price = item.Price;
+                obj.Quantity = item.Quantity;
+                obj.CustomerName = item.CustomerName;
+                obj.CustomerPhone = item.CustomerPhone;
+                obj.CustomerEmail = item.CustomerEmail;
+                orderItemDetailList.Add(obj);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OrderItem orderItem = db.OrderItems.Find(id);
-            ViewBag.Procduct = db.Products.Find(id).Name;
             if (orderItem == null)
             {
                 return HttpNotFound();
             }
-            return View(orderItem);
+            return View(orderItemDetailList[0]);
         }
 
         // GET: OrderItems/Create
@@ -48,13 +83,22 @@ namespace BaiTapCODEFIRST.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Oder_ID,Product_ID,Quantity")] OrderItem orderItem)
+        public ActionResult Create([Bind(Include = "Oder_ID,Product_ID,Quantity")] OrderItem orderItem)
         {
-            if (ModelState.IsValid)
+            OrderItemValidator orderItemValidator = new OrderItemValidator();
+
+            ValidationResult result = orderItemValidator.Validate(orderItem);
+
+            if (result.IsValid)
             {
-                db.OrderItems.Add(orderItem);
-                db.SaveChanges();
+                this.odit.CreateOrderItem(orderItem);
                 return RedirectToAction("Index");
+            } else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName,item.ErrorMessage);
+                }
             }
 
             return View(orderItem);
