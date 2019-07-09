@@ -72,6 +72,61 @@ $(document).on("change keyup","#inputPriceProduct" ,
 
 ///////
 
+//Tìm hiểu jq validtion 
+// Làm sao để cấu hình validation tự đọng bắt ở client
+
+class Validate {
+    ElementInput;
+    ElementError;
+    TouchedInput = false;
+    DirtyInput = false;
+    constructor(_selectElementInput, _selectElementError){
+        this.ElementInput = $(_selectElementInput);
+        this.ElementError = $(_selectElementError);
+    };
+    touchedInput(){
+        this.TouchedInput = true;
+    }
+    dirtyInput(){
+        this.DirtyInput = true;
+    };
+    checkValidate = false;
+    showHideError(){
+        if(!this.checkValidate && this.DirtyInput && this.TouchedInput){
+            this.ElementError.show().css("color", "red")
+        } else {
+            this.ElementError.hide();
+        }
+    }
+}
+
+// //////////////////
+// var V_ProductName = new Validate("#inputNameProduct",".alert-NameProduct");
+
+// $(document).on("keypress", V_ProductName.ElementInput, V_ProductName.touchedInput() );
+
+// $(document).on( "change keyup" , V_ProductName.ElementInput , function(){
+    
+//     V_ProductName.dirtyInput();
+//     if(V_ProductName.ElementInput.val()){
+//         V_ProductName.checkValidate = true;
+//     } else {
+//         V_ProductName.checkValidate = false;
+//     }
+//     console.log(V_ProductName.checkValidate)
+//     // V_ProductName.showHideError();
+//     // $btnCreateProdcut.attr("disabled",! V_ProductName.checkValidate && V_PriceName.checkValidate );
+// })
+// ///////
+
+// var V_PriceName =  new Validate("#inputPriceProduct", ".alert-PriceProduct")
+
+
+// $(document).ready(function(){
+//     console.log(V_ProductName.ElementInput);
+//     console.log(V_ProductName.checkValidate, V_ProductName.TouchedInput)
+// })
+
 
 
 

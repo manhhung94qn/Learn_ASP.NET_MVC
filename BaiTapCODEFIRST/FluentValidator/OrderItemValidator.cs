@@ -17,7 +17,7 @@ namespace BaiTapCODEFIRST.FluentValidator
 
             RuleFor(x => x.Product_ID).Must(checkExitsInProduct).WithMessage("Sản phẩm bạn yêu cầu không tồn tại.");
 
-            RuleFor(x => x.Quantity).InclusiveBetween(0, 5000).WithMessage("Vui lòng chọn số lượng sản phẩm");
+            RuleFor(x => x.Quantity).InclusiveBetween(0,50000).WithMessage("Vui lòng chọn số lượng sản phẩm");
 
         }
 
