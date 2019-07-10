@@ -28,6 +28,9 @@ namespace MyStore.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OrderDetailModel orderDetailModel = db.OrderDetails.Find(id);
+
+            
+
             if (orderDetailModel == null)
             {
                 return HttpNotFound();

@@ -32,8 +32,9 @@ $("body").delegate(".btn-buy", "click", function (event) {
         CustomerName: $("#or-CustomerName").val(),
         CustomerAddress: $("#or-CustomerAddress").val(),
         CustomerPhone: $("#or-CustomerPhone").val(),
-        CustomerMail : $("or-CustomerMail").val()
-    }
+        CustomerMail: $("#or-CustomerMail").val()
+    };
+    console.log(dataOrder);
     $.ajax({
         url: "../Order/Create",
         type: "POST",
@@ -51,7 +52,6 @@ $("body").delegate(".btn-buy", "click", function (event) {
                     </div>
                 `
             )        
-            console.log(data);
             let listCardOBJ = JSON.parse(localStorage.getItem("listProductCard"));
             for (const item of listCardOBJ) {
                 let orderDetailData = {
