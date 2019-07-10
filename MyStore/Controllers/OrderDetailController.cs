@@ -7,126 +7,122 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyStore.Models;
-using MyStore.Repository;
 
 namespace MyStore.Controllers
 {
-    public class ProductController : Controller
+    public class OrderDetailController : Controller
     {
-        IProduct productService;
-        public ProductController()
-        {
-            productService = new ProductRepository( new MyshopContext() );
-        }
+        private MyshopContext db = new MyshopContext();
 
-        // GET: Product
+        // GET: OrderDetail
         public ActionResult Index()
         {
-            return View( this.productService.getAllProduct() );
+            return View(db.OrderDetails.ToList());
         }
 
-        // GET: Product/Details/5
+        // GET: OrderDetail/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            ProductModel productModel = this.productService.getProductById(id);
-
-            if (productModel == null)
+            OrderDetailModel orderDetailModel = db.OrderDetails.Find(id);
+            if (orderDetailModel == null)
             {
                 return HttpNotFound();
             }
-            return View(productModel);
+            return View(orderDetailModel);
         }
 
-        // GET: Product/Create
+        // GET: OrderDetail/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Product/Create
+        // POST: OrderDetail/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ProductName,AvatarUrl,Price")] ProductModel productModel)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Create([Bind(Include = "OrderID,ProductID,Quantity")] OrderDetailModel orderDetailModel)
         {
             if (ModelState.IsValid)
             {
-                this.productService.insertProduct(productModel);
-                return RedirectToAction("Index");
+                db.OrderDetails.Add(orderDetailModel);
+                db.SaveChanges();
+                return Json(new { status = true });
+                //return RedirectToAction("Index");
             }
-
-            return View(productModel);
+            return Json(new { status= false});
+            //return View(orderDetailModel);
         }
 
-        // GET: Product/Edit/5
+        // GET: OrderDetail/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductModel productModel = this.productService.getProductById(id);
-            if (productModel == null)
+            OrderDetailModel orderDetailModel = db.OrderDetails.Find(id);
+            if (orderDetailModel == null)
             {
                 return HttpNotFound();
             }
-            return View(productModel);
+            return View(orderDetailModel);
         }
 
-        // POST: Product/Edit/5
+        // POST: OrderDetail/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ProductName,AvatarUrl,Price")] ProductModel productModel)
+        public ActionResult Edit([Bind(Include = "ID,OrderID,ProductID,Quantity")] OrderDetailModel orderDetailModel)
         {
             if (ModelState.IsValid)
             {
-                this.productService.updateProduct(productModel);
+                db.Entry(orderDetailModel).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(productModel);
+            return View(orderDetailModel);
         }
 
-        // GET: Product/Delete/5
+        // GET: OrderDetail/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductModel productModel = this.productService.getProductById(id);
-            if (productModel == null)
+            OrderDetailModel orderDetailModel = db.OrderDetails.Find(id);
+            if (orderDetailModel == null)
             {
                 return HttpNotFound();
             }
-            return View(productModel);
+            return View(orderDetailModel);
         }
 
-        // POST: Product/Delete/5
+        // POST: OrderDetail/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            this.productService.deleteProduct(id);
+            OrderDetailModel orderDetailModel = db.OrderDetails.Find(id);
+            db.OrderDetails.Remove(orderDetailModel);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public JsonResult SendProductToClient(int id)
+        protected override void Dispose(bool disposing)
         {
-            return Json(this.productService.getProductById(id));
-        }
-
-        public ActionResult ShopCard()
-        {
-            return View();
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

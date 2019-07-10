@@ -28,6 +28,15 @@ namespace MyStore
 
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                 "~/Scripts/ShopScript/main.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/homeScript").Include(
+                    "~/Scripts/ShopScript/Controllers/addItemToCard.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/shopCart").Include(
+                    "~/Scripts/ShopScript/shopCart.js"
+                ));
+
         }
     }
 }

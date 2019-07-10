@@ -3,34 +3,37 @@
     var ListProduct = ViewBag.ProductList;
 }
 
-    <div class="container-fluid mt-2">
+<div class="container-fluid mt-2">
 
-        <div class="card">
-            <div class="card-header bg-info">
-                Sản phẩm của chúng tôi
-            </div>
-            <div class="container-fluid my-1">
-                <div class="row px-1">
-                    @foreach (var product in ListProduct)
-                    {
-                        <div class="border d-inline-block col-md-3 parent-node-item">
-                            <img src="~/Assets/images/@product.AvatarUrl" class="card-img-top img-fluid w-100" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">@product.ProductName</h5>
-                                <p class="card-text">Giá hiện tại: @product.Price</p>
-                                <div class="btn-select">
-                                    <div class="flex">
-                                        <button type="button" class="btn btn-outline-primary w-100 mb-2 btn-buynow">Mua ngay</button>
-                                        <button type="button" class="btn btn-outline-primary w-100" data-productid=@product.ID>Thêm vào giỏ hàng</button>
-                                    </div>
+    <div class="card">
+        <div class="card-header bg-info">
+            Sản phẩm của chúng tôi
+        </div>
+        <div class="container-fluid my-1">
+            <div class="row px-1">
+                @foreach (var product in ListProduct)
+                {
+                    <div class="border d-inline-block col-md-3 parent-node-item">
+                        <img src="~/Assets/images/@product.AvatarUrl" class="card-img-top img-fluid w-100" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.ProductName</h5>
+                            <p class="card-text">Giá hiện tại: @product.Price</p>
+                            <div class="btn-select">
+                                <div class="flex">
+                                    <button type="button" class="btn btn-outline-primary w-100 mb-2 btn-buynow">Mua ngay</button>
+                                    <button type="button" class="btn btn-outline-primary w-100 btn-addToCart" data-productid=@product.ID>Thêm vào giỏ hàng</button>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
         </div>
-
-
-
     </div>
+
+
+
+</div>
+@section AddMyScripts {
+    @Scripts.Render("~/bundles/homeScript")
+}

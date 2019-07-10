@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "ShopCard";
+}
+
+<h2>Giỏ hàng của bạn</h2>
+
+<div class="container">
+    <h2>Hóa đơn của bạn</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr class="bg-primary">
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Tổng tạm</th>
+                <th scope="col">Tùy chọn</th>
+            </tr>
+        </thead>
+        <tbody class="content-order-cart">
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Tổng giá trị đơn hàng:</td>
+                <td class="sum-price-order" colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="mx-auto">
+        <h2>Xác nhận thông tin đặt hàng:</h2>        
+        @RenderPage("../Order/CreateOrder.cshtml")
+    </div>
+
+</div>
+
+@section AddMyScripts {
+    @Scripts.Render("~/bundles/shopCart");
+}
