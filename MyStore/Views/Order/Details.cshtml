@@ -4,62 +4,66 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>OrderModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CodeOrder)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CodeOrder)
-        </dd>
+<div class="container ">
+    <div class="card">
+        <div class="card-header">
+            Thông tin đơn hàng: @(Model.CodeOrder)
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Thông tin khách hàng</h5>
+            <p class="card-text">
+                Khách hàng: @(Model.CustomerName)
+            </p>
+            <p class="card-text">
+                Thời gian: @(Model.DateOrder)
+            </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOrder)
-        </dt>
+            <p class="card-text">
+                Số điện thoại: @(Model.CustomerPhone)
+            </p>
+            <p class="card-text">
+                Email: @(Model.CustomerMail)
+            </p>
+            <p class="card-text">
+                Địa chỉ: @(Model.CustomerAddress)
+            </p>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOrder)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerName)
-        </dt>
+        <div class="card-body">
+            <h5 class="card-title">Thông tin khách hàng</h5>
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <td>Tên sản phẩm</td>
+                        <td>Đơn giá</td>
+                        <td>Số lượng</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetailModels.Where(de => de.OrderID == Model.ID))
+                    {
+                        <tr>
+                            <td>
+                                @item.ProductModel.ProductName
+                            </td>
+                            <td>
+                                @item.ProductModel.Price
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.CustomerName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerPhone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustomerPhone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerMail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustomerMail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustomerAddress)
-        </dd>
-
-    </dl>
+        </div>
+    </div>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")

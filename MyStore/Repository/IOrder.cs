@@ -1,4 +1,5 @@
-﻿using MyStore.ModelView;
+﻿using MyStore.Models;
+using MyStore.ModelView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace MyStore.Repository
 {
     interface IOrder
     {
-        List<OrderInforVM> getOrderDetail(int? ID);
+        OrderModel getOrderByID(int? ID);
+
+        OrderModel addOrder(OrderModel order);
     }
 }

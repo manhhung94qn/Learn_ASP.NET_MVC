@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     let listCardJson = localStorage.getItem("listProductCard");
-    console.log(listCardJson);
     if (listCardJson) {
         let tbBody = CreateTable(JSON.parse(listCardJson));
         $(".content-order-cart").html(tbBody);
@@ -26,63 +25,47 @@ $("body").delegate(".quantity-product", "change", function () {
     localStorage.setItem("listProductCard", JSON.stringify(listCardOBJ));
 });
 
+
 $("body").delegate(".btn-buy", "click", function (event) {
-    event.preventDefault();
+    event.preventDefault();   
+
+    let listCardOBJ = JSON.parse(localStorage.getItem("listProductCard"));
+    
+    let ListDetail = [];
+
+    for (const item of listCardOBJ) {
+        let Detail ={
+
+            ProductID: item.ID,
+            Quantity: parseInt(item.quantity),
+        }
+        ListDetail.push(Detail);
+    }
+
+
     dataOrder = {
         CustomerName: $("#or-CustomerName").val(),
         CustomerAddress: $("#or-CustomerAddress").val(),
         CustomerPhone: $("#or-CustomerPhone").val(),
-        CustomerMail: $("#or-CustomerMail").val()
+        CustomerMail: $("#or-CustomerMail").val(),
+        OrderDetailModels: ListDetail
     };
-    console.log(dataOrder);
     $.ajax({
-        url: "../Order/Create",
         type: "POST",
-        async: false,
+        url: "../Order/Create",
         data: dataOrder,
-        datatype: "json",
-        success: function (data) {    
-            $(".body-content").css("position", "relative").html(
-                `
-                    <div 
-                        class="w-100 h-100 position-absolute 
-                        style="z-index:100;text-align:center; top: 0; right:0"
-                    ">
-                        <img class="w-100 h-100" src="https://i.redd.it/y1wufcwxgc4z.gif" />
-                    </div>
-                `
-            )        
-            let listCardOBJ = JSON.parse(localStorage.getItem("listProductCard"));
-            for (const item of listCardOBJ) {
-                let orderDetailData = {
-                    OrderID: data.ID,
-                    ProductID: item.ID,
-                    Quantity: item.quantity
-                }
-                $.ajax({
-                    url: "../OrderDetail/Create",
-                    data: orderDetailData,
-                    async: false,
-                    type: "POST",
-                    datatype: "JSON",
-                    success: function(res){
-
-                    }
-                })
-            }
+        dataType: "json",
+        success: function () {
             localStorage.removeItem("listProductCard")
-            $(".body-content").html(`<h3 class="container">Cảm ơn bạn đã mua hàng tại MyShop. Bạn sẽ sớm nhận được hàng sau 2 ngày.</h3>`)
+            $(".container-content").html(`
+                <p>
+                    Đặt hàng thành công. 
+                    Đơn hàng của bạn sẽ được giao đến bạn trong 1 tuần. Vui lòng đợi... <br>
+                    Cảm ơn bạn đã mua hàng tại MyShop.
+                </p>
+            `);
         }
-    })
-
-    // $.ajax({
-    //     url : "../Product/SendProductToClient",
-    //     data : { id: 1 },        
-    //     type: "POST",
-    //     datatype: "json",
-    //     success: function(res){
-    //         console.log(res);}
-    // });
+    });
 })
 
 
@@ -119,3 +102,30 @@ var deleteProduct = (id) => {
     localStorage.removeItem("listProductCard");
     localStorage.setItem("listProductCard", JSON.stringify(listCardOBJ));
 }
+
+$(document).ready(function() {
+
+    //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
+    $("#senddata").validate({
+        rules: {
+            CustomerName: {
+                required: true,
+                minlength: 10  
+            },
+            CustomerAddress: {
+                required: true,
+                minlength: 10
+            }
+        },
+        messages: {
+            CustomerName: {                
+                required: "Vui lòng nhập họ tên",
+                minlength: "Họ tên phải nhiều hơn 10 kí tự"
+            },
+            CustomerAddress: {
+                required: "Vui lòng nhập địa chỉ",
+                minlength: "Địa chỉ phải nhiều hơn 10 kí tự"
+            }
+        }
+    });
+});

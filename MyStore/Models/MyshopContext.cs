@@ -19,6 +19,8 @@ namespace MyStore.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<OrderModel>().HasMany(c => c.OrderDetailModels).WithRequired(c=>c.OrderModel);
+            modelBuilder.Entity<OrderDetailModel>().HasRequired(c => c.ProductModel);
         }
     }
 

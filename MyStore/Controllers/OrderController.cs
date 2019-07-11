@@ -7,12 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyStore.Models;
+using MyStore.Repository;
 
 namespace MyStore.Controllers
 {
     public class OrderController : Controller
     {
         private MyshopContext db = new MyshopContext();
+        OrderRepository orderService;
+
+        public OrderController()
+        {
+            this.orderService = new OrderRepository( new MyshopContext() );
+        }
 
         // GET: Order
         public ActionResult Index()
@@ -27,7 +34,7 @@ namespace MyStore.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderModel orderModel = db.Orders.Find(id);
+            OrderModel orderModel = orderService.getOrderByID(id);
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -46,17 +53,17 @@ namespace MyStore.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public JsonResult Create([Bind(Include = "ID,CustomerName,CustomerPhone,CustomerMail,CustomerAddress")] OrderModel orderModel)
+        public JsonResult Create([Bind(Include = "ID,CustomerName,CustomerPhone,CustomerMail,CustomerAddress,OrderDetailModels")] OrderModel order)
         {
             if (ModelState.IsValid)
             {
-                orderModel.DateOrder = DateTime.Now;
-                orderModel.CodeOrder = this.CreateCodeOrder();
-                db.Orders.Add(orderModel);
-                db.SaveChanges();
-                return Json(new { status= true, ID = orderModel.ID });
+                order.DateOrder = DateTime.Now;
+                orderService.addOrder(order);
+                return Json( new { status = true});
+            } else
+            {
+                return Json(new { status = false });
             }
-            return Json(new { status = false, ID = string.Empty });
 
         }
 

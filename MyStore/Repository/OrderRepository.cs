@@ -14,11 +14,28 @@ namespace MyStore.Repository
         {
             this.db = shopData;
         }
-        public List<OrderInforVM> getOrderDetail(int? ID)
+        public OrderModel getOrderByID(int? ID)
         {
-            OrderModel orderModel = db.Orders.Find(ID);
-            List< OrderDetailModel> OrderDetail = orderModel.OrderDetailModels.Select(o => o.ID == ID);
-            return OrderDetail;
+            if(ID == null)
+            {
+                return null;
+            }
+            OrderModel order = db.Orders.Find(ID);
+            return order;
+        }
+
+        public OrderModel addOrder(OrderModel order)
+        {
+            DateTime timeNow = DateTime.Now;
+            order.DateOrder = timeNow;
+            order.CodeOrder = "MYSHOP" + Convert.ToString(timeNow.Year) + 
+                Convert.ToString(timeNow.Date) + Convert.ToString(timeNow.Hour) + 
+                Convert.ToString(timeNow.Minute) + Convert.ToString(timeNow.Second);
+
+            db.Orders.Add(order);
+
+            db.SaveChanges();
+            return order;
         }
     }
 }
